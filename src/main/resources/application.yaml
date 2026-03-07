@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: Kikki
+  ai:
+    openai:
+      api-key: {api-key}
+    chats:
+      options:
+        model: gpt-4.1-2025-04-14
+        temperature: 0.7  # ✅ Added value + proper 6-space indent
+    embeddings:
+      options:
+        model: text-embedding-3-small
+    vectorstore:
+      pgvector:
+        index-type: hnsw
+        distance-type: cosine_distance
+        dimensions: 1536
+        initialize-schema: true
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+            table-name: short_term_chat_memory
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:6010/kikki
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+server:
+  port: 6000
+  servlet:
+    context-path: /api/v1
+
+logging:
+  level:
+    org.springframework.ai: DEBUG
+
+jwt:
+  secretKey: ahduiahf7erfdjsoihf4y52jfashf0usd0f0dfnisa843nakbfi33nr9g8
