@@ -29,7 +29,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private String name;
+    private String firstName;
+    private String lastName;
+
+    public String getName() {
+        if (firstName != null && lastName != null) {
+            return firstName + " " + lastName;
+        }
+        return firstName != null ? firstName : lastName;
+    }
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)

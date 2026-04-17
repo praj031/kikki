@@ -6,5 +6,13 @@ import lombok.Data;
 public class SignUpRequestDto {
     private String email;
     private String password;
-    private String name;
+    private String firstName;
+    private String lastName;
+
+    public String getName() {
+        if (firstName != null && lastName != null) {
+            return firstName + " " + lastName;
+        }
+        return firstName != null ? firstName : lastName;
+    }
 }

@@ -1,0 +1,53 @@
+ I've fixed all the major errors in your project. Here's a summary of the changes:
+
+  Backend Fixes (Java/Spring Boot)
+
+  pom.xml:
+  - Changed Spring Boot version from 4.0.3 (doesn't exist) to 3.4.3
+  - Changed spring-boot-starter-webmvc to spring-boot-starter-web
+  - Changed spring-boot-starter-webmvc-test to spring-boot-starter-test
+
+  TokenUsageAdvisor.java:
+  - Updated to use CallAroundAdvisor instead of deprecated CallAdvisor
+  - Updated method signatures to use AdvisedRequest, AdvisedResponse, and CallAroundAdvisorChain
+
+  AIController.java:
+  - Created AIRequestDto to properly handle JSON request body
+  - Updated endpoint to use the DTO instead of raw String
+
+  AuthController.java:
+  - Removed redundant @CrossOrigin annotation (CORS already configured in WebSecurityConfig)
+  - Added /auth/me endpoint for getting current user
+
+  User Entity & DTOs:
+  - Split name field into firstName and lastName to match frontend expectations
+  - Updated UserDto with additional fields (fullName)
+  - Updated SignUpRequestDto with separate firstName/lastName fields
+  - Updated AuthService to handle the new fields properly
+  - Updated MapperConfig to map fullName from getName()
+
+  WebSecurityConfig.java:
+  - Added port 5173 (default Vite port) to allowed origins
+
+  Security:
+  - Moved sensitive values (OpenAI API key, JWT secret) to environment variables in application.yaml
+  - Created .env.example file documenting required environment variables
+
+  New Files:
+  - AIRequestDto.java - DTO for AI requests
+  - HealthController.java - Health check endpoint for frontend
+  - .mvn/wrapper/maven-wrapper.properties - Fixed missing Maven wrapper
+
+  To Run the Project
+
+  1. Set environment variables:
+  export OPENAI_API_KEY=your-key
+  export JWT_SECRET_KEY=your-secret
+  2. Start PostgreSQL:
+  docker-compose up -d
+  3. Run the backend:
+  ./mvnw spring-boot:run
+  4. Run the frontend:
+  cd frontend && npm run dev
+
+✻ Brewed for 7m 32s

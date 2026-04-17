@@ -42,11 +42,6 @@ export default function ChatInterface() {
     }
   };
 
-  const handleVoiceInput = (transcript: string) => {
-    setVoiceText(transcript);
-    setInput(transcript);
-  };
-
   return (
     <div className="flex-1 flex flex-col max-h-full">
       {/* Messages Area */}

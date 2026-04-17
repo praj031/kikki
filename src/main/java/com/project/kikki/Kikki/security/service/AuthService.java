@@ -36,7 +36,10 @@ public class AuthService {
             throw new RuntimeException("User is already present with same email id");
         }
 
-        User newUser = modelMapper.map(signUpRequestDto, User.class);
+        User newUser = new User();
+        newUser.setEmail(signUpRequestDto.getEmail());
+        newUser.setFirstName(signUpRequestDto.getFirstName());
+        newUser.setLastName(signUpRequestDto.getLastName());
         newUser.setRoles(Set.of(Role.GUEST));
         newUser.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
         newUser = userRepository.save(newUser);
@@ -63,6 +66,10 @@ public class AuthService {
 
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: "+id));
         return jwtService.generateAccessToken(user);
+    }
+
+    public UserDto getCurrentUser(User user) {
+        return modelMapper.map(user, UserDto.class);
     }
 
 }

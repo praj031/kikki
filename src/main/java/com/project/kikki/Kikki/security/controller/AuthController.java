@@ -5,7 +5,9 @@ import com.project.kikki.Kikki.security.dto.LoginDto;
 import com.project.kikki.Kikki.security.dto.LoginResponseDto;
 import com.project.kikki.Kikki.security.dto.SignUpRequestDto;
 import com.project.kikki.Kikki.security.dto.UserDto;
+import com.project.kikki.Kikki.security.entity.User;
 import com.project.kikki.Kikki.security.service.AuthService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
-@CrossOrigin(origins = "http://localhost:5176")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -51,6 +52,11 @@ public class AuthController {
 
         String accessToken = authService.refreshToken(refreshToken);
         return ResponseEntity.ok(new LoginResponseDto(accessToken));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDto> getCurrentUser(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(authService.getCurrentUser(user));
     }
 
 }

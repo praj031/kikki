@@ -1,6 +1,7 @@
 package com.project.kikki.Kikki.AI.controller;
 
 
+import com.project.kikki.Kikki.AI.dto.AIRequestDto;
 import com.project.kikki.Kikki.AI.service.AIService;
 import com.project.kikki.Kikki.security.service.JWTService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class AIController {
 
     @PostMapping()
     public ResponseEntity<String> askAI(
-            @RequestBody String question,
+            @RequestBody AIRequestDto requestDto,
             @RequestHeader("Authorization") String authHeader
     ){
 
@@ -27,7 +28,7 @@ public class AIController {
         Long userId = jwtService.getUserIdFromToken(token);
 
         log.info("Inside as AI");
-        var response = aiService.askAI(question,userId);
+        var response = aiService.askAI(requestDto.question(), userId);
         return ResponseEntity.ok(response);
     }
 
